@@ -14,20 +14,20 @@ public class DialogoAlbum extends JDialog implements ActionListener {
     private JButton finish;
     private JButton cancel;
     private static Album current;
+    private String name = "";
 
     public void dialogoAlbum(){
         JFrame createAlbum = new JFrame("");
-        String name = JOptionPane.showInputDialog(createAlbum,
+        name = JOptionPane.showInputDialog(createAlbum,
                 "Introduzca el nombre del álbum", "Crear álbum", JOptionPane.PLAIN_MESSAGE);
         if (name != null && name.length() > 0) {
             current = new Album(name);
-            BibliotecaGUI.getMiBiblioteca().añadeÁlbum(current);
             newAlbum();
         }
     }
     public void newAlbum() {
         newAlbum = new JFrame("Nuevo álbum");
-        newAlbum.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        newAlbum.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         newAlbum.setSize(350, 250);
         Container p = getContentPane();
         lista = new JTextArea(20,25);
@@ -49,7 +49,6 @@ public class DialogoAlbum extends JDialog implements ActionListener {
 
         lista.setEditable(false);
         lista.setText(current.toString());
-        newAlbum.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         newAlbum.add(p);
         pack();
         newAlbum.setLocationRelativeTo(null);
@@ -69,8 +68,9 @@ public class DialogoAlbum extends JDialog implements ActionListener {
         } else if(e.getSource() == cancel){
             newAlbum.dispose();
         } else if(e.getSource() == finish){
-            newAlbum.dispose();
+            BibliotecaGUI.getMiBiblioteca().añadeÁlbum(current);
             BibliotecaGUI.getLista().setText(BibliotecaGUI.getMiBiblioteca().toString());
+            newAlbum.dispose();
         }
     }
 }

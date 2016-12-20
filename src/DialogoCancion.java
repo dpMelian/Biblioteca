@@ -27,11 +27,15 @@ public class DialogoCancion{
 
         p.add(labels, BorderLayout.CENTER);
 
-        JOptionPane.showMessageDialog(frame, p, "", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showConfirmDialog(frame, p, "", JOptionPane.OK_CANCEL_OPTION);
 
-        Cancion c = new Cancion(title.getText(), author.getText(), Integer.parseInt(duration.getText()));
-
-        DialogoAlbum.getCurrent().añadeCanción(c);
-        DialogoAlbum.getLista().setText(DialogoAlbum.getCurrent().toString());
+        try{
+            Cancion c = new Cancion(title.getText(), author.getText(), Integer.parseInt(duration.getText()));
+            DialogoAlbum.getCurrent().añadeCanción(c);
+            DialogoAlbum.getLista().setText(DialogoAlbum.getCurrent().toString());
+        } catch (NumberFormatException e){
+            JOptionPane.showMessageDialog(p, "La duración introducida no es un entero",
+                    "Error" , JOptionPane.ERROR_MESSAGE);
+        }
     }
 }
